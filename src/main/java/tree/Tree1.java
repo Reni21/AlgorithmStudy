@@ -6,12 +6,12 @@ import java.util.*;
 
 public class Tree1 {
 
-    // Обход дерева в ширину. Вернуть в формате массива: [1, 2, 4, 3, 5]
+    // Обход дерева в ширину. Вернуть в формате массива: [1, 2, 4, 3, 5, 2]
     //         1
     //       /   \
     //      2     4
-    //       \   /
-    //        3 5
+    //       \   / \
+    //        3 5   2
     int[] traverseTree(MyTree<Integer> tree) {
         if (tree == null || tree.value == null) {
             return new int[]{};
@@ -36,7 +36,7 @@ public class Tree1 {
         return result.stream().mapToInt(Integer::intValue).toArray();
     }
 
-    //  Найти наибольшее value для каждого уровня в дереве
+    //  Найти наибольшее value для каждого уровня(row) в дереве
     int[] largestValuesInTreeRows(MyTree<Integer> tree) {
         if (tree == null || tree.value == null) {
             return new int[]{};
@@ -87,6 +87,42 @@ public class Tree1 {
             sum += treeSum(right);
         }
         return sum;
+    }
+
+    // Обход дерева. Посчитать сумму путей в формате: 123 + 145 + 142 = 410 Value равны значениям от 0-9
+    //         1
+    //       /   \
+    //      2     4
+    //       \   / \
+    //        3 5   2
+    public long digitTreeSum(MyTree<Integer> tree) {
+        return Arrays.stream(collectPaths(tree, "").split(" ")).
+                mapToLong(Long::parseLong).
+                sum();
+    }
+
+    private String collectPaths(MyTree<Integer> tree, String acc) {
+        if (tree == null) {
+            return "";
+        }
+        acc += tree.value;
+        return tree.left == null && tree.right == null ?
+                acc + " " :
+                collectPaths(tree.left, acc) + collectPaths(tree.right, acc);
+    }
+
+    public long digitTreeSum2(MyTree<Integer> tree) {
+        return collectPaths2(tree, 0);
+    }
+
+    private long collectPaths2(MyTree<Integer> tree, long acc) {
+        if (tree == null) {
+            return 0;
+        }
+        acc = acc * 10 + tree.value; // acc=2, val=3 > 20+3=23 / acc=5, val=0 > 50+0=50
+        return tree.left == null && tree.right == null ?
+                acc :
+                collectPaths2(tree.left, acc) + collectPaths2(tree.right, acc);
     }
 
 }

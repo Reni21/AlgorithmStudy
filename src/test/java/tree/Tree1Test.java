@@ -22,46 +22,11 @@ public class Tree1Test {
     }
 
     @Test
-    public void shouldReturnArrayWithNumbersInExpectedOrder1() {
-        MyTree<Integer> tree1 = new MyTree<>(1);
-        MyTree<Integer> tree2 = new MyTree<>(2);
-        MyTree<Integer> tree3 = new MyTree<>(3);
-        MyTree<Integer> tree4 = new MyTree<>(4);
-        MyTree<Integer> tree5 = new MyTree<>(5);
-        MyTree<Integer> tree6 = new MyTree<>(6);
-        MyTree<Integer> tree7 = new MyTree<>(7);
-        MyTree<Integer> tree8 = new MyTree<>(8);
-        MyTree<Integer> tree9 = new MyTree<>(9);
-        tree1.left = tree2;
-        tree1.right = tree4;
-
-        tree2.left = tree7;
-        tree2.right = tree3;
-
-        tree4.left = tree5;
-        tree4.right = tree6;
-
-        tree3.left = tree8;
-        tree5.right = tree9;
-
-        int[] res = instance.traverseTree(tree1);
-        Assertions.assertThat(res).containsSequence(1, 2, 4, 7, 3, 5, 6, 8, 9);
-    }
-
-    @Test
     public void shouldReturnArrayWithNumbersInExpectedOrder() {
-        MyTree<Integer> tree1 = new MyTree<>(1);
-        MyTree<Integer> tree2 = new MyTree<>(2);
-        MyTree<Integer> tree3 = new MyTree<>(3);
-        MyTree<Integer> tree4 = new MyTree<>(4);
-        MyTree<Integer> tree5 = new MyTree<>(5);
-        tree1.left = tree2;
-        tree1.right = tree4;
-        tree2.right = tree3;
-        tree4.left = tree5;
+        MyTree<Integer> tree1 = constructIntTree2();
 
         int[] res = instance.traverseTree(tree1);
-        Assertions.assertThat(res).containsSequence(1, 2, 4, 3, 5);
+        Assertions.assertThat(res).containsSequence(1, 2, 4, 3, 5, 2);
     }
 
     @Test
@@ -76,7 +41,7 @@ public class Tree1Test {
 
     @Test
     public void shouldReturnArrayWithMaxValuesOfEachRow() {
-        MyTree<Integer> treeMin1 = constructTree();
+        MyTree<Integer> treeMin1 = constructIntTree1();
 
         int[] res = instance.largestValuesInTreeRows(treeMin1);
         Assertions.assertThat(res).containsSequence(-1, 7, 1);
@@ -84,13 +49,32 @@ public class Tree1Test {
 
     @Test
     public void shouldCountAllTreeValues() {
-        MyTree<Integer> treeMin1 = constructTree();
+        MyTree<Integer> treeMin1 = constructIntTree1();
 
         int res = instance.treeSum(treeMin1);
         Assert.assertEquals(12, res);
     }
 
-    private MyTree<Integer> constructTree(){
+    @Test
+    public void shouldFindDigitTreePathSum() {
+        MyTree<Integer> stringTree = constructIntTree2();
+        long res = instance.digitTreeSum(stringTree);
+        Assert.assertEquals(410, res);
+    }
+
+    @Test
+    public void shouldFindDigitTreePathSumV2() {
+        MyTree<Integer> stringTree = constructIntTree2();
+        long res = instance.digitTreeSum2(stringTree);
+        Assert.assertEquals(410, res);
+    }
+
+    //        -1
+    //       /   \
+    //      5     7
+    //             \
+    //              1
+    private MyTree<Integer> constructIntTree1() {
         MyTree<Integer> treeMin1 = new MyTree<>(-1);
         MyTree<Integer> tree5 = new MyTree<>(5);
         MyTree<Integer> tree7 = new MyTree<>(7);
@@ -99,5 +83,27 @@ public class Tree1Test {
         treeMin1.right = tree7;
         tree7.right = tree1;
         return treeMin1;
+    }
+
+    //         1
+    //       /   \
+    //      2     4
+    //       \   / \
+    //        3 5   2
+    private MyTree<Integer> constructIntTree2() {
+        MyTree<Integer> root = new MyTree<>(1);
+        MyTree<Integer> leaf2 = new MyTree<>(2);
+        MyTree<Integer> leaf2V2 = new MyTree<>(2);
+        MyTree<Integer> leaf3 = new MyTree<>(3);
+        MyTree<Integer> leaf4 = new MyTree<>(4);
+        MyTree<Integer> leaf5 = new MyTree<>(5);
+
+        root.left = leaf2;
+        root.right = leaf4;
+
+        leaf2.right = leaf3;
+        leaf4.left = leaf5;
+        leaf4.right = leaf2V2;
+        return root;
     }
 }

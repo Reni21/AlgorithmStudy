@@ -36,35 +36,6 @@ public class Tree1 {
         return result.stream().mapToInt(Integer::intValue).toArray();
     }
 
-    //    public int[] traverseTree(MyTree<Integer> tree) {
-//        List<Integer> res = new ArrayList<>();
-//        List<MyTree<Integer>> iter = new ArrayList<>();
-//        iter.add(tree);
-//
-//        while (tree != null && tree.value != null) {
-//            List<MyTree<Integer>> iterNew = new ArrayList<>();
-//            for (MyTree<Integer> entry : iter) {
-//                res.add(entry.value);
-//
-//                MyTree<Integer> left = entry.left;
-//                if (left != null) {
-//                    iterNew.add(left);
-//                }
-//                MyTree<Integer> right = entry.right;
-//                if (right != null) {
-//                    iterNew.add(right);
-//                }
-//            }
-//            if (iterNew.isEmpty()) {
-//                tree = null;
-//            } else {
-//                iter = iterNew;
-//            }
-//        }
-//
-//        return res.stream().mapToInt(number -> number).toArray();
-//    }
-
     //  Найти наибольшее value для каждого уровня в дереве
     int[] largestValuesInTreeRows(MyTree<Integer> tree) {
         if (tree == null || tree.value == null) {
@@ -99,6 +70,23 @@ public class Tree1 {
             }
         }
         return result.stream().mapToInt(Integer::intValue).toArray();
+    }
+
+    // Посчитать сумму всех узлов дерева
+    public int treeSum(MyTree<Integer> tree) {
+        if (tree == null || tree.value == null) {
+            return 0;
+        }
+        int sum = tree.value;
+        MyTree<Integer> left = tree.left;
+        if (left != null) {
+            sum += treeSum(left);
+        }
+        MyTree<Integer> right = tree.right;
+        if (right != null) {
+            sum += treeSum(right);
+        }
+        return sum;
     }
 
 }

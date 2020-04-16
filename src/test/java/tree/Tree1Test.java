@@ -76,6 +76,21 @@ public class Tree1Test {
 
     @Test
     public void shouldReturnArrayWithMaxValuesOfEachRow() {
+        MyTree<Integer> treeMin1 = constructTree();
+
+        int[] res = instance.largestValuesInTreeRows(treeMin1);
+        Assertions.assertThat(res).containsSequence(-1, 7, 1);
+    }
+
+    @Test
+    public void shouldCountAllTreeValues() {
+        MyTree<Integer> treeMin1 = constructTree();
+
+        int res = instance.treeSum(treeMin1);
+        Assert.assertEquals(12, res);
+    }
+
+    private MyTree<Integer> constructTree(){
         MyTree<Integer> treeMin1 = new MyTree<>(-1);
         MyTree<Integer> tree5 = new MyTree<>(5);
         MyTree<Integer> tree7 = new MyTree<>(7);
@@ -83,8 +98,6 @@ public class Tree1Test {
         treeMin1.left = tree5;
         treeMin1.right = tree7;
         tree7.right = tree1;
-
-        int[] res = instance.largestValuesInTreeRows(treeMin1);
-        Assertions.assertThat(res).containsSequence(-1, 7, 1);
+        return treeMin1;
     }
 }

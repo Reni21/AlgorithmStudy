@@ -2,10 +2,7 @@ package tree;
 
 import util.MyTree;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Tree1 {
 
@@ -67,5 +64,41 @@ public class Tree1 {
 //
 //        return res.stream().mapToInt(number -> number).toArray();
 //    }
+
+    //  Найти наибольшее value для каждого уровня в дереве
+    int[] largestValuesInTreeRows(MyTree<Integer> tree) {
+        if (tree == null || tree.value == null) {
+            return new int[]{};
+        }
+
+        List<Integer> result = new ArrayList<>();
+        Queue<MyTree<Integer>> curLevel = new ArrayDeque<>();
+        curLevel.add(tree);
+        Queue<MyTree<Integer>> nextLevel = new ArrayDeque<>();
+
+        int maxValue = Integer.MIN_VALUE;
+        while (!curLevel.isEmpty()) {
+            MyTree<Integer> entry = curLevel.poll();
+            int value = entry.value;
+            maxValue = Math.max(maxValue, value);
+
+            MyTree<Integer> left = entry.left;
+            if (left != null) {
+                nextLevel.add(left);
+            }
+            MyTree<Integer> right = entry.right;
+            if (right != null) {
+                nextLevel.add(right);
+            }
+
+            if (curLevel.isEmpty()) {
+                curLevel = nextLevel;
+                result.add(maxValue);
+                maxValue = Integer.MIN_VALUE;
+                nextLevel = new ArrayDeque<>();
+            }
+        }
+        return result.stream().mapToInt(Integer::intValue).toArray();
+    }
 
 }

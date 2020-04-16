@@ -10,7 +10,7 @@ public class Tree1Test {
 
     @Test
     public void shouldReturnEmptyArrayForEmptyTreeValue() {
-        MyTree<Integer> tree = new MyTree<Integer>(null);
+        MyTree<Integer> tree = new MyTree<>(null);
         int[] res = instance.traverseTree(tree);
         Assertions.assertThat(res).isEmpty();
     }
@@ -66,11 +66,25 @@ public class Tree1Test {
 
     @Test
     public void shouldReturnArrayWithOneNumberIfTreeContainsOnlyRoot() {
-        MyTree<Integer> tree1 = new MyTree<Integer>(1);
+        MyTree<Integer> tree1 = new MyTree<>(1);
 
         int[] res = instance.traverseTree(tree1);
         Assertions.assertThat(res)
                 .hasSize(1)
                 .containsOnly(1);
+    }
+
+    @Test
+    public void shouldReturnArrayWithMaxValuesOfEachRow() {
+        MyTree<Integer> treeMin1 = new MyTree<>(-1);
+        MyTree<Integer> tree5 = new MyTree<>(5);
+        MyTree<Integer> tree7 = new MyTree<>(7);
+        MyTree<Integer> tree1 = new MyTree<>(1);
+        treeMin1.left = tree5;
+        treeMin1.right = tree7;
+        tree7.right = tree1;
+
+        int[] res = instance.largestValuesInTreeRows(treeMin1);
+        Assertions.assertThat(res).containsSequence(-1, 7, 1);
     }
 }

@@ -119,10 +119,10 @@ public class Tree1 {
         if (tree == null) {
             return 0;
         }
-        acc = acc * 10 + tree.value; // acc=2, val=3 > 20+3=23 / acc=5, val=0 > 50+0=50
+        acc = acc * 10 + tree.value; // acc=1, val=2 > 10+2=12 /or/ acc=5, val=0 > 50+0=50
         return tree.left == null && tree.right == null ?
-                acc :
-                collectPaths2(tree.left, acc) + collectPaths2(tree.right, acc);
+                acc : // 123, 145, 142
+                collectPaths2(tree.left, acc) + collectPaths2(tree.right, acc); // as result we got 123 + 145 + 142
     }
 
 }
